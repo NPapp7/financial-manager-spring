@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+
+    <title>Home</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link th:href="@{css/buttons.css}"  rel="stylesheet" type="text/css"  />
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<div th:replace="fragments/header :: header"></div>
+<br/>
+<br/>
+<br/>
+<div class="container-fluid">
+    <h3>Transactions</h3>
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Product</th>
+                <th scope="col">Category</th>
+                <th scope="col">Cost</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date</th>
+                <th scope="col">Type of transaction</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="expense : ${expenses}">
+                <th scope="row" th:text="${expense.id}"></th>
+                <td th:text="${expense.product}"/>
+                <td th:text="${expense.category}"/>
+                <td th:text="${expense.cost}"/>
+                <td th:text="${expense.description}"/>
+                <td th:text="${expense.dateOfTransaction}"/>
+                <td th:text="${expense.typeOfTransaction}"/>
+                <td>
+                    <form method="post" th:action="@{/home/deleteTransaction/{id}(id=${expense.id})}">
+                        <input id="id" type="hidden" th:value="${expense.id}"/>
+                        <input type="submit" class="app-button button" onClick="return confirm('Are you sure?')" value="Delete"/>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>Sum:</td>
+            <td th:text="${sum}"></td>
+        </tr>
+        <tr>
+            <td>Count:</td>
+            <td th:text="${itemNumber}"></td>
+        </tr>
+        </tfoot>
+    </table>
+
+    <br/>
+    <form method="post" th:action="@{/home}" data-toggle="validator" role="form">
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
+        <div class="form-group">
+            <label for="product" class="control-label">Product name</label>
+            <input id="product" class="form-control" type="text" name="product" required='required' placeholder="Transaction name"/>
+        </div>
+        <div class="form-group">
+            <label for="category" class="control-label">Category</label>
+            <br/>
+            <select id="category" name="category" required="required">
+                <option th:each="category : ${categories}"
+                        th:value="${category}"
+                        th:text="${category}">Categories</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="cost" class="control-label">Cost</label>
+            <input id="cost" class="form-control" type="number" name="cost" required='required' placeholder="Cost"/>
+        </div>
+        <div class="form-group">
+            <label for="description" class="control-label">Description</label>
+            <input id="description" class="form-control" type="text" name="description" placeholder="Description"/>
+        </div>
+        <div class="form-group">
+            <label for="dateOfTransaction" class="control-label">Date of transaction</label>
+            <input id="dateOfTransaction" class="form-control" name="dateOfTransaction" required="required"/>
+        </div>
+        <div class="form-group">
+            <label for="typeOfTransaction" class="control-label">Type of transaction</label>
+            <br/>
+            <select id="typeOfTransaction" name="typeOfTransaction" required="required">
+                <option th:each="transactionType : ${typeOfTransaction}"
+                        th:value="${transactionType}"
+                        th:text="${transactionType}">Transaction type</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary app-button button" value="Submit Form"/>
+        </div>
+    </form>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<script type="text/javascript">
+        var dateOfTransaction = $('input[name="dateOfTransaction"]');
+        dateOfTransaction.datepicker({
+            format: 'yyyy-mm-dd',
+            todayHighlight: true,
+            autoclose: true,
+        });
+
+        $('input').each(function(){
+            if($(this).is('[required="required"]')){
+                      console.log("executed");
+                      console.log($(this));
+                     $(this).siblings("label").append(' <font style="color:red;position:absolute;" > *</font>');
+            }
+        });
+       $('select').each(function(){
+            if($(this).is('[required="required"]')){
+                      console.log("executed");
+                      console.log($(this));
+                     $(this).siblings("label").append(' <font style="color:red;position:absolute;" > *</font>');
+            }
+        });
+    </script>
+</body>
+</html>

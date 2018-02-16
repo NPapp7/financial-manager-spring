@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:tiles="http://www.thymeleaf.org">
+<head>
+    <title tiles:fragment="title">Login</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"
+            integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link th:href="@{css/login.css}"  rel="stylesheet" type="text/css"  />
+</head>
+<body>
+<div class="container">
+    <div class="card card-container">
+    <form name="f" th:action="@{/login}" method="post" role="form" class="form-signin">
+            <legend>Please Login</legend>
+            <div th:if="${param.error}" class="alert alert-error">
+                Invalid username and password.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                You have been logged out.
+            </div>
+            <input type="hidden"
+                   name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+            <label for="username" class="control-label">Username</label>
+            <input type="text" id="username" name="username" placeholder="User name" class="form-control" required="required" autofocus="true"/>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" class="form-control" required="required"/>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">Log in</button>
+            </div>
+    </form>
+    </div>
+</div>
+</body>
+</html>

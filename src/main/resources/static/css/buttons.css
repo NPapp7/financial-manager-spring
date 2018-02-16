@@ -1,0 +1,22 @@
+.app-button input[type=email],
+.app-button input[type=password],
+.app-button input[type=text],
+.app-button input[type=submit],
+.app-button.button,
+button {
+    display: block;
+    z-index: 1;
+    position: relative;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    background-color: rgb(0, 0, 139);
+    border-radius: 10px;
+    color: white;
+}
+
+.app-button:hover,
+.app-button:active,
+.app-button:focus {
+    background-color: rgb(0, 0, 0);
+}

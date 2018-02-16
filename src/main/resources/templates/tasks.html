@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Tasks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link th:href="@{css/buttons.css}"  rel="stylesheet" type="text/css"  />
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<br/>
+<br/>
+<br/>
+<div class="container-fluid">
+    <h3>Tasks</h3>
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Deadline</th>
+            <th scope="col">Description</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task : ${tasks}">
+            <th scope="row" th:text="${task.id}"></th>
+            <td th:text="${task.taskName}"/>
+            <td th:text="${task.deadline}"/>
+            <td th:text="${task.description}"/>
+            <td>
+                <form method="post" th:action="@{/task/deleteTask/{id}(id=${task.id})}">
+                    <input id="id" type="hidden" th:value="${task.id}"/>
+                    <button type="submit" onClick="return confirm('Are you sure?')">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="post" th:action="@{/task}" data-toggle="validator" role="form">
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
+        <div class="form-group">
+            <label for="taskName" class="control-label">Task name</label>
+            <input id="taskName" class="form-control" type="text" name="taskName" required='required' placeholder="Task name"/>
+        </div>
+        <div class="form-group">
+            <label for="deadline" class="control-label">Deadline</label>
+            <input id="deadline" class="form-control" type="date" name="deadline" required='required' placeholder="Deadline" value="" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"/>
+        </div>
+        <div class="form-group">
+            <label for="description" class="control-label">Description</label>
+            <input id="description" class="form-control" type="text" name="description" placeholder="Description" required="required" />
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary app-button button" value="Add new Task"/>
+        </div>
+    </form>
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+<script>
+
+</script>
+</body>
+</html>
