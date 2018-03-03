@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.demo.backend;
+package com.norbcorp.hungary.springboot.demo.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,11 +50,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", taskName='" + taskName + '\'' +
-                ", deadline='" + deadline + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+        return getTaskName();
     }
 }

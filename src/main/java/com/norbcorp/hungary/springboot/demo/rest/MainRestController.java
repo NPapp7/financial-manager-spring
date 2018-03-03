@@ -1,25 +1,22 @@
 package com.norbcorp.hungary.springboot.demo.rest;
 
-import com.norbcorp.hungary.springboot.demo.backend.User;
-import com.norbcorp.hungary.springboot.demo.backend.UserRepository;
+import com.norbcorp.hungary.springboot.demo.backend.*;
+import com.norbcorp.hungary.springboot.demo.backend.model.Balance;
+import com.norbcorp.hungary.springboot.demo.backend.model.Expenses;
+import com.norbcorp.hungary.springboot.demo.backend.model.User;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.inject.Inject;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,8 +27,14 @@ import java.util.logging.Logger;
 public class MainRestController {
     private static Logger logger = Logger.getLogger(MainRestController.class.getName());
 
+    @Inject
+    private Balance balance;
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ExpensesRepository expensesRepository;
 
     @RequestMapping(value = "/all", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody Iterable<User> getAll(){
@@ -43,6 +46,16 @@ public class MainRestController {
         return userRepository.findOne(userid);
     }
 
+    @RequestMapping("/expenses")
+    public @ResponseBody List<Expenses> getExpenses(){
+        List<Expenses> expenses = new LinkedList<>();
+        for (Iterator<Expenses> iterator = expensesRepository.findAll().iterator(); iterator.hasNext(); ) {
+            Expenses expense = iterator.next();
+            expenses.add(expense);
+        }
+        return expenses;
+    }
+
     @RequestMapping(value = "/add", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public String addUser(@RequestBody(required = true) String userName){
         try {
@@ -52,6 +65,24 @@ public class MainRestController {
             return "[{\"status\": Successful}]";
         } catch(Exception e){
             return "[{\"status\": Unsuccessful}, \"reason\": "+e.getMessage()+"}]";
+        }
+    }
+
+    @RequestMapping(value="/changeBalance", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<?> changeBalance(@RequestBody Balance balance){
+        if(balance != null && balance.getBalance() != null) {
+            List<Expenses> expenses = new LinkedList<>();
+            long sum = 0;
+            for (Iterator<Expenses> iterator = expensesRepository.findAll().iterator(); iterator.hasNext(); ) {
+                Expenses expense = iterator.next();
+                sum += expense.getCost();
+                expenses.add(expense);
+            }
+
+            this.balance.setBalance(balance.getBalance());
+            return ResponseEntity.ok(this.balance.getBalance() - sum);
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 

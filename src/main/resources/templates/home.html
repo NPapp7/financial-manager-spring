@@ -7,13 +7,15 @@
     <title>Home</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <link th:href="@{css/buttons.css}"  rel="stylesheet" type="text/css"  />
+    <script type="text/javascript" th:src="@{js/change_balance_ajax.js}"/>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 <div th:replace="fragments/header :: header"></div>
@@ -22,35 +24,40 @@
 <br/>
 <div class="container-fluid">
     <h3>Transactions</h3>
+    <p id="balance" th:text="${balance}"></p>
+    <input id="newBalance" type="number" name="balance" placeholder="New Balance"/>
+    <input id="changeBalance" type="submit" class="app-button button" value="Change balance"/>
     <table class="table table-striped table-hover table-bordered">
         <thead class="thead-dark">
-            <tr>
-                <th scope="col">id</th>
-                <th scope="col">Product</th>
-                <th scope="col">Category</th>
-                <th scope="col">Cost</th>
-                <th scope="col">Description</th>
-                <th scope="col">Date</th>
-                <th scope="col">Type of transaction</th>
-                <th scope="col">Delete</th>
-            </tr>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Product</th>
+            <th scope="col">Category</th>
+            <th scope="col">Cost</th>
+            <th scope="col">Description</th>
+            <th scope="col">Date</th>
+            <th scope="col">Type of transaction</th>
+            <th scope="col">Task Name</th>
+            <th scope="col">Delete</th>
+        </tr>
         </thead>
         <tbody>
-            <tr th:each="expense : ${expenses}">
-                <th scope="row" th:text="${expense.id}"></th>
-                <td th:text="${expense.product}"/>
-                <td th:text="${expense.category}"/>
-                <td th:text="${expense.cost}"/>
-                <td th:text="${expense.description}"/>
-                <td th:text="${expense.dateOfTransaction}"/>
-                <td th:text="${expense.typeOfTransaction}"/>
-                <td>
-                    <form method="post" th:action="@{/home/deleteTransaction/{id}(id=${expense.id})}">
-                        <input id="id" type="hidden" th:value="${expense.id}"/>
-                        <input type="submit" class="app-button button" onClick="return confirm('Are you sure?')" value="Delete"/>
-                    </form>
-                </td>
-            </tr>
+        <tr th:each="expense : ${expenses}">
+            <th scope="row" th:text="${expense.id}"></th>
+            <td th:text="${expense.product}"/>
+            <td th:text="${expense.category}"/>
+            <td th:text="${expense.cost}"/>
+            <td th:text="${expense.description}"/>
+            <td th:text="${expense.dateOfTransaction}"/>
+            <td th:text="${expense.typeOfTransaction}"/>
+            <td th:text="${expense.taskName}"/>
+            <td>
+                <form method="post" th:action="@{/home/deleteTransaction/{id}(id=${expense.id})}">
+                    <input id="id" type="hidden" th:value="${expense.id}"/>
+                    <input type="submit" class="app-button button" onClick="return confirm('Are you sure?')" value="Delete"/>
+                </form>
+            </td>
+        </tr>
         </tbody>
         <tfoot>
         <tr>
@@ -101,6 +108,15 @@
                 <option th:each="transactionType : ${typeOfTransaction}"
                         th:value="${transactionType}"
                         th:text="${transactionType}">Transaction type</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="relatedTaskId" class="control-label">Related task</label>
+            <br/>
+            <select id="relatedTaskId" name="relatedTaskId" required="required">
+                <option th:each="task : ${tasks}"
+                        th:value="${task.id}"
+                        th:text="${task}">Task</option>
             </select>
         </div>
         <div class="form-group">

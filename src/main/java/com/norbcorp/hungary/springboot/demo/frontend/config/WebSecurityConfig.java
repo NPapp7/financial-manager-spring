@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
@@ -16,19 +17,19 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-             http
+        http
                 .authorizeRequests()
-                    .antMatchers("/resources/**").permitAll()
-                    .antMatchers("/login*").anonymous()
-                    .anyRequest().authenticated()
+                .antMatchers("/resources/**").permitAll()
+                .antMatchers("/login*").anonymous()
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login").permitAll()
-                    .defaultSuccessUrl("/home",true)
-                    .failureUrl("/login?error=true")
+                .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/home",true)
+                .failureUrl("/login?error=true")
                 .and()
-                    .httpBasic().and()
-                    .logout().logoutSuccessUrl("/login");
+                .httpBasic().and()
+                .logout().logoutSuccessUrl("/login");
 
     }
 
@@ -43,6 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .inMemoryAuthentication()
-                    .withUser("user").password("password").roles("USER");
+                .withUser("user").password("password").roles("USER");
     }
 }

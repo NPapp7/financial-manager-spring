@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.demo.backend;
+package com.norbcorp.hungary.springboot.demo.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +19,7 @@ public class Expenses implements Serializable {
     private String description;
     private String dateOfTransaction;
     private String typeOfTransaction;
+    private Long relatedTaskId;
 
     public Long getId() {
         return id;
@@ -74,5 +75,13 @@ public class Expenses implements Serializable {
 
     public void setTypeOfTransaction(String typeOfTransaction) {
         this.typeOfTransaction = typeOfTransaction;
+    }
+
+    public Long getRelatedTaskId() {
+        return relatedTaskId;
+    }
+
+    public void setRelatedTaskId(Long relatedTaskId) {
+        this.relatedTaskId = relatedTaskId;
     }
 }

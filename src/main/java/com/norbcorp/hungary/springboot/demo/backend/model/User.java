@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.demo.backend;
+package com.norbcorp.hungary.springboot.demo.backend.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "app_users")
-public class User implements Serializable{
+public class User implements Serializable {
     @Id
     @GeneratedValue
     private Long id;
@@ -39,3 +39,4 @@ public class User implements Serializable{
                 '}';
     }
 }
+

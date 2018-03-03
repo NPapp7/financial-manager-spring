@@ -1,6 +1,6 @@
 package com.norbcorp.hungary.springboot.demo.frontend;
 
-import com.norbcorp.hungary.springboot.demo.backend.Task;
+import com.norbcorp.hungary.springboot.demo.backend.model.Task;
 import com.norbcorp.hungary.springboot.demo.backend.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
