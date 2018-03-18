@@ -7,15 +7,14 @@
     <title>Home</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <script type="text/javascript" th:src="@{bootstrap/js/bootstrap.js}"/>
+    <script type="text/javascript" th:src="@{js/change_balance_ajax.js}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
     <link th:href="@{css/buttons.css}"  rel="stylesheet" type="text/css"  />
-    <script type="text/javascript" th:src="@{js/change_balance_ajax.js}"/>
+    <link rel="stylesheet" th:href="@{bootstrap/css/bootstrap.css}"/>
 </head>
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
 <div th:replace="fragments/header :: header"></div>
@@ -26,7 +25,7 @@
     <h3>Transactions</h3>
     <p id="balance" th:text="${balance}"></p>
     <input id="newBalance" type="number" name="balance" placeholder="New Balance"/>
-    <input id="changeBalance" type="submit" class="app-button button" value="Change balance"/>
+    <input id="changeBalance" type="submit" class="btn app-button button" value="Change balance"/>
     <table class="table table-striped table-hover table-bordered">
         <thead class="thead-dark">
         <tr>
@@ -54,7 +53,7 @@
             <td>
                 <form method="post" th:action="@{/home/deleteTransaction/{id}(id=${expense.id})}">
                     <input id="id" type="hidden" th:value="${expense.id}"/>
-                    <input type="submit" class="app-button button" onClick="return confirm('Are you sure?')" value="Delete"/>
+                    <input type="submit" class="btn app-button button" onClick="return confirm('Are you sure?')" value="Delete"/>
                 </form>
             </td>
         </tr>
@@ -120,7 +119,7 @@
             </select>
         </div>
         <div class="form-group">
-            <input type="submit" class="btn btn-primary app-button button" value="Submit Form"/>
+            <input type="submit" class="btn app-button button" value="Submit Form"/>
         </div>
     </form>
     <div th:replace="fragments/footer :: footer"></div>
