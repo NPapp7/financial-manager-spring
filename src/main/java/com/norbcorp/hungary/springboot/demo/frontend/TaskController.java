@@ -1,5 +1,6 @@
 package com.norbcorp.hungary.springboot.demo.frontend;
 
+import com.norbcorp.hungary.springboot.demo.backend.model.Balance;
 import com.norbcorp.hungary.springboot.demo.backend.model.Task;
 import com.norbcorp.hungary.springboot.demo.backend.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,13 @@ public class TaskController {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private Balance balance;
+
     @RequestMapping(value = "/task", method = RequestMethod.GET)
     public String getTaskPage(Map<String,Object> objectMap){
         objectMap.put("tasks",taskRepository.findAll());
+        objectMap.put("balance","Balance: "+balance.getBalance());
         return "tasks";
     }
 
