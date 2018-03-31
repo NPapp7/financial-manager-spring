@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.demo.backend.model;
+package com.norbcorp.hungary.springboot.financialmanager.backend.model;
 
 public class TaskRelatedExpenses extends Expenses{
     private String taskName;

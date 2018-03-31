@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.demo.backend.config;
+package com.norbcorp.hungary.springboot.financialmanager.backend.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

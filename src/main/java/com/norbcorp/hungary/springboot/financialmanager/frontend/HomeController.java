@@ -1,13 +1,12 @@
-package com.norbcorp.hungary.springboot.demo.frontend;
+package com.norbcorp.hungary.springboot.financialmanager.frontend;
 
-import com.norbcorp.hungary.springboot.demo.backend.model.Balance;
-import com.norbcorp.hungary.springboot.demo.backend.model.Expenses;
-import com.norbcorp.hungary.springboot.demo.backend.ExpensesRepository;
-import com.norbcorp.hungary.springboot.demo.backend.TaskRepository;
-import com.norbcorp.hungary.springboot.demo.backend.model.Task;
-import com.norbcorp.hungary.springboot.demo.backend.model.TaskRelatedExpenses;
-import com.norbcorp.hungary.springboot.demo.util.CostCategory;
-import com.norbcorp.hungary.springboot.demo.util.TransactionType;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Balance;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Expenses;
+import com.norbcorp.hungary.springboot.financialmanager.backend.ExpensesRepository;
+import com.norbcorp.hungary.springboot.financialmanager.backend.TaskRepository;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.TaskRelatedExpenses;
+import com.norbcorp.hungary.springboot.financialmanager.util.CostCategory;
+import com.norbcorp.hungary.springboot.financialmanager.util.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

@@ -1,6 +1,5 @@
-package com.norbcorp.hungary.springboot.demo.backend.model;
+package com.norbcorp.hungary.springboot.financialmanager.backend.model;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component

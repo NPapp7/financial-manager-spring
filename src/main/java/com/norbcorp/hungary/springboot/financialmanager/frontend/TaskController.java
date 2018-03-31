@@ -1,8 +1,8 @@
-package com.norbcorp.hungary.springboot.demo.frontend;
+package com.norbcorp.hungary.springboot.financialmanager.frontend;
 
-import com.norbcorp.hungary.springboot.demo.backend.model.Balance;
-import com.norbcorp.hungary.springboot.demo.backend.model.Task;
-import com.norbcorp.hungary.springboot.demo.backend.TaskRepository;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Balance;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Task;
+import com.norbcorp.hungary.springboot.financialmanager.backend.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

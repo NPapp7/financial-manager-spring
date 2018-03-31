@@ -1,6 +1,6 @@
-package com.norbcorp.hungary.springboot.demo.backend;
+package com.norbcorp.hungary.springboot.financialmanager.backend;
 
-import com.norbcorp.hungary.springboot.demo.backend.model.Task;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Task;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

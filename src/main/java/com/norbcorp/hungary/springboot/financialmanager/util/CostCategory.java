@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.demo.util;
+package com.norbcorp.hungary.springboot.financialmanager.util;
 
 public enum CostCategory {
     FOOD,

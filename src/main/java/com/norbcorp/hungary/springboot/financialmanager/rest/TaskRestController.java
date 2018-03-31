@@ -1,13 +1,10 @@
-package com.norbcorp.hungary.springboot.demo.rest;
+package com.norbcorp.hungary.springboot.financialmanager.rest;
 
-import com.norbcorp.hungary.springboot.demo.backend.TaskRepository;
-import com.norbcorp.hungary.springboot.demo.backend.model.Task;
+import com.norbcorp.hungary.springboot.financialmanager.backend.TaskRepository;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.logging.Logger;
 
@@ -24,4 +21,10 @@ public class TaskRestController {
     public @ResponseBody Iterable<Task> getAllTasks(){
         return taskRepository.findAll();
     }
+
+    @GetMapping(value="{taskId}")
+    public @ResponseBody Task getTaskById(@PathVariable("taskId") Long taskId){
+        return taskRepository.findOne(taskId);
+    }
+
 }

@@ -1,9 +1,9 @@
-package com.norbcorp.hungary.springboot.demo.rest;
+package com.norbcorp.hungary.springboot.financialmanager.rest;
 
-import com.norbcorp.hungary.springboot.demo.backend.*;
-import com.norbcorp.hungary.springboot.demo.backend.model.Balance;
-import com.norbcorp.hungary.springboot.demo.backend.model.Expenses;
-import com.norbcorp.hungary.springboot.demo.backend.model.User;
+import com.norbcorp.hungary.springboot.financialmanager.backend.*;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Balance;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.Expenses;
+import com.norbcorp.hungary.springboot.financialmanager.backend.model.User;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
