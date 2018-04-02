@@ -8,16 +8,17 @@ import com.norbcorp.hungary.springboot.financialmanager.backend.model.TaskRelate
 import com.norbcorp.hungary.springboot.financialmanager.util.CostCategory;
 import com.norbcorp.hungary.springboot.financialmanager.util.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.inject.Inject;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.security.Principal;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Controller
@@ -79,5 +80,36 @@ public class HomeController {
         if(expense!=null && expense.getProduct()!=null && expense.getCategory()!=null && expense.getCost()!=null)
             expensesRepository.save(expense);
         return "redirect:/home";
+    }
+
+    private String getUserName(Principal principal) {
+        if (principal == null) {
+            return "anonymous";
+        } else {
+
+            final UserDetails currentUser = (UserDetails) ((Authentication) principal).getPrincipal();
+            Collection<? extends GrantedAuthority> authorities = currentUser.getAuthorities();
+            for (GrantedAuthority grantedAuthority : authorities) {
+                System.out.println(grantedAuthority.getAuthority());
+            }
+            return principal.getName();
+        }
+    }
+
+    private Collection<String> getUserRoles(Principal principal) {
+        if (principal == null) {
+            return Arrays.asList("none");
+        } else {
+
+            Set<String> roles = new HashSet<String>();
+
+            final UserDetails currentUser;
+            currentUser = (UserDetails) ((Authentication) principal).getPrincipal();
+            Collection<? extends GrantedAuthority> authorities = currentUser.getAuthorities();
+            for (GrantedAuthority grantedAuthority : authorities) {
+                roles.add(grantedAuthority.getAuthority());
+            }
+            return roles;
+        }
     }
 }
