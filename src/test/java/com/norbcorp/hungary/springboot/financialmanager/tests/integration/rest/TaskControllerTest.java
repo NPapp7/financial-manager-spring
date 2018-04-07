@@ -1,9 +1,7 @@
-package com.norbcorp.hungary.springboot.financialmanager.frontend.rest;
+package com.norbcorp.hungary.springboot.financialmanager.tests.integration.rest;
 
 import com.norbcorp.hungary.springboot.financialmanager.Application;
 import com.norbcorp.hungary.springboot.financialmanager.backend.model.Task;
-import com.norbcorp.hungary.springboot.financialmanager.backend.model.User;
-import com.norbcorp.hungary.springboot.financialmanager.rest.MainRestController;
 import com.norbcorp.hungary.springboot.financialmanager.rest.TaskRestController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +21,7 @@ import java.util.logging.Logger;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -40,7 +39,7 @@ public class TaskControllerTest {
     private TaskRestController service;
 
     private RequestPostProcessor testUser() {
-        return user("user").password("password").roles("USER");
+        return user("testuser").password("password").roles("USER");
     }
 
     @Test
@@ -52,12 +51,54 @@ public class TaskControllerTest {
 
         given(service.getAllTasks()).willReturn(allTasks);
 
-        // logger.info("*** MVC perform string object"+mvc.perform(get("/api/user/all").with(testUser())).andReturn().getResponse().getContentAsString());
-
         mvc.perform(get("/api/task/all")
                 .contentType(MediaType.APPLICATION_JSON).with(testUser()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].name").value(task.getTaskName()));
+                .andExpect(jsonPath("$[0].taskName").value(task.getTaskName()));
+    }
+
+    @Test
+    public void testDelete() throws Exception{
+        Task task = new Task();
+        task.setId(1);
+        task.setTaskName("test task 1");
+
+        Task task2 = new Task();
+        task2.setId(2);
+        task2.setTaskName("test task 2");
+
+        List<Task> allTasks = Arrays.asList(task, task2);
+
+        given(service.getAllTasks()).willReturn(allTasks);
+
+        mvc.perform(get("/api/task/all")
+                .contentType(MediaType.APPLICATION_JSON).with(testUser()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].taskName").value(task.getTaskName()))
+                .andExpect(jsonPath("$[1].taskName").value(task2.getTaskName()));
+
+        mvc.perform(delete("/api/task/delete/{id}",task.getId())
+                .contentType(MediaType.APPLICATION_JSON_UTF8).with(testUser()))
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testGetTaskById() throws Exception{
+        Task task = new Task();
+        task.setId(1);
+        task.setTaskName("test task 1");
+
+        List<Task> allTasks = Arrays.asList(task);
+
+        given(service.getTaskById(1l)).willReturn(task);
+
+        mvc.perform(get("/api/task/{taskId}",1)
+                .contentType(MediaType.APPLICATION_JSON).with(testUser()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$['id']").value(task.getId()))
+                .andExpect(jsonPath("$['taskName']").value(task.getTaskName()));
     }
 }

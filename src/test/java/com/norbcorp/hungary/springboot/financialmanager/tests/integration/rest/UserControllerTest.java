@@ -1,4 +1,4 @@
-package com.norbcorp.hungary.springboot.financialmanager.frontend.rest;
+package com.norbcorp.hungary.springboot.financialmanager.tests.integration.rest;
 
 import com.norbcorp.hungary.springboot.financialmanager.Application;
 import com.norbcorp.hungary.springboot.financialmanager.backend.model.User;
@@ -40,12 +40,11 @@ public class UserControllerTest {
     private MainRestController service;
 
     private RequestPostProcessor testUser() {
-        return user("user").password("password").roles("USER");
+        return user("testuser").password("password").roles("USER");
     }
 
     @Test
     public void testGetALL() throws Exception {
-        logger.info("Tests of rest api");
         User user = new User();
         user.setName("test1");
 

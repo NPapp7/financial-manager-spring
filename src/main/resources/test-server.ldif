@@ -8,7 +8,7 @@ objectclass: top
 objectclass: organizationalUnit
 ou: people
 
-dn: uid=baeldung,ou=people,dc=springframework,dc=org
+dn: uid=testuser,ou=people,dc=springframework,dc=org
 objectclass: top
 objectclass: person
 objectclass: organizationalPerson
@@ -22,10 +22,10 @@ dn: cn=admin,ou=groups,dc=springframework,dc=org
 objectclass: top
 objectclass: groupOfNames
 cn: admin
-member: uid=baeldung,ou=people,dc=springframework,dc=org
+member: uid=testuser,ou=people,dc=springframework,dc=org
 
 dn: cn=user,ou=groups,dc=springframework,dc=org
 objectclass: top
 objectclass: groupOfNames
 cn: user
-member: uid=baeldung,ou=people,dc=springframework,dc=org
+member: uid=testuser,ou=people,dc=springframework,dc=org
